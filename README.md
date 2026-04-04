@@ -1,0 +1,2 @@
+# CUPL_TD4
+CUPLの練習としてTD4を作ってみました。CPLDはATF1504ASLを使用。
