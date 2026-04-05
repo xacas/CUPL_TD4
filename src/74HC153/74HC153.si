@@ -1,0 +1,44 @@
+Name            74HC153;
+Partno          CPLD;
+Revision        01;
+Date            4/4/26;
+Designer        nichica;
+Company         Yonetsu-Nichica;
+Location        Japan;
+Assembly        None;
+Device          F1504ISPTQFP44;
+
+ORDER: A, B, C0, C1, C2, C3, y;
+
+VECTORS:
+/* C0 select (B=0, A=0) */
+0 0 0 0 0 0 L
+0 0 1 0 0 0 H
+
+/* C1 select (B=0, A=1) */
+1 0 0 0 0 0 L
+1 0 0 1 0 0 H
+
+/* C2 select (B=1, A=0) */
+0 1 0 0 0 0 L
+0 1 0 0 1 0 H
+
+/* C3 select (B=1, A=1) */
+1 1 0 0 0 0 L
+1 1 0 0 0 1 H
+
+/* C0 should be selected */
+0 0 0 1 1 1 L
+0 0 1 1 1 1 H
+
+/* C1 should be selected */
+1 0 1 0 1 1 L
+1 0 1 1 1 1 H
+
+/* C2 should be selected */
+0 1 1 1 0 1 L
+0 1 1 1 1 1 H
+
+/* C3 should be selected */
+1 1 1 1 1 0 L
+1 1 1 1 1 1 H
