@@ -1,0 +1,43 @@
+Name     74HC74;
+PartNo   CPLD;
+Date     4/4/26;
+Revision 01;
+Designer nichica;
+Company  Yonetsu-Nichica;
+Assembly None;
+Location Japan;
+Device   F1504ISPTQFP44;
+
+
+ORDER: clk, CLR_N, D, Q; 
+
+
+VECTORS:
+/* Asynchronous reset */
+00XL  /*step  1*/
+10XL  /*step  2*/
+/* Reset release */
+010L  /*step  3*/
+110L  /*step  4*/
+/* D=1 */
+011L  /*step  5*/
+111H  /*step  6*/
+/* Maintain Q */
+110H  /*step  7*/
+111H  /*step  8*/
+/* D=0 */
+010H  /*step  9*/
+110L  /*step 10*/
+/* D=1 */
+011L  /*step 11*/
+111H  /*step 12*/
+/* Asynchronous reset */
+001L  /*step 13*/
+101L  /*step 14*/
+/* Reset release */
+011L  /*step 15*/
+111H  /*step 16*/
+/* check clock edge */
+110H  /*step 17*/
+010H  /*step 18*/
+110L  /*step 19*/

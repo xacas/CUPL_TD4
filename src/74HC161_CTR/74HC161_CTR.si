@@ -1,0 +1,33 @@
+Name            74HC161_CTR;
+Partno          CPLD;
+Revision        01;
+Date            4/4/26;
+Designer        nichica;
+Company         Yonetsu-Nichica;
+Location        Japan;
+Assembly        None;
+Device          F1504ISPTQFP44;
+
+ORDER: clk, CLR_N, LOAD_N, IN3..IN0, %2, Q3..Q0, %2;
+
+VECTORS:
+/* --- Asynchronous Clear --- */
+ 0  0  1 'A' "0"
+ 1  0  1 'A' "0"
+
+/* --- Load --- */
+ 0  1  0 'A' "0"
+ 1  1  0 'A' "A"
+
+/* --- Ignore and Increment --- */
+ 0  1  1 '5' "A"
+ 1  1  1 '5' "B"
+
+/* --- Load --- */
+ 0  1  0 '5' "B"
+ 1  1  0 '5' "5"
+
+/* --- Asynchronous Clear --- */
+ 0  0  1 'A' "0"
+ 1  0  1 'A' "0"
+ 

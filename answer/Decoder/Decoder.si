@@ -1,0 +1,37 @@
+Name            Decoder;
+Partno          CPLD;
+Revision        01;
+Date            4/4/26;
+Designer        nichica;
+Company         Yonetsu-Nichica;
+Location        Japan;
+Assembly        None;
+Device          F1504ISPTQFP44;
+
+ORDER: OP3, OP2, OP1, OP0, CFLAG, selectB, selectA, _load0, _load1, _load2, _load3;
+
+VECTORS:
+0 0 0 0 0 L L L H H H /* ADD A, Im */
+0 0 0 0 1 L L L H H H /* ADD A, Im */
+0 0 0 1 0 L H L H H H /* MOV A, B  */
+0 0 0 1 1 L H L H H H /* MOV A, B  */
+0 0 1 0 0 H L L H H H /* IN  A     */
+0 0 1 0 1 H L L H H H /* IN  A     */
+0 0 1 1 0 H H L H H H /* MOV A, Im */
+0 0 1 1 1 H H L H H H /* MOV A, Im */
+0 1 0 0 0 L L H L H H /* MOV B, A  */
+0 1 0 0 1 L L H L H H /* MOV B, A  */
+0 1 0 1 0 L H H L H H /* ADD B, Im */
+0 1 0 1 1 L H H L H H /* ADD B, Im */
+0 1 1 0 0 H L H L H H /* IN  B     */
+0 1 1 0 1 H L H L H H /* IN  B     */
+0 1 1 1 0 H H H L H H /* MOV B, Im */
+0 1 1 1 1 H H H L H H /* MOV B, Im */
+1 0 0 1 0 L H H H L H /* OUT B     */
+1 0 0 1 1 L H H H L H /* OUT B     */
+1 0 1 1 0 H H H H L H /* OUT Im    */
+1 0 1 1 1 H H H H L H /* OUT Im    */
+1 1 1 0 0 H H H H H L /* JNC (C=0) */
+1 1 1 0 1 H H H H H H /* JNC (C=1) */
+1 1 1 1 0 H H H H H L /* JMP       */
+1 1 1 1 1 H H H H H L /* JMP       */

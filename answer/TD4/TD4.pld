@@ -1,0 +1,169 @@
+Name            TD4;
+Partno          CPLD;
+Revision        01;
+Date            3/16/26;
+Designer        nichica;
+Company         Yonetsu-Nichica;
+Location        Japan;
+Assembly        None;
+Device          F1504ISPTQFP44;
+
+/* Example showing clock usage */
+$define D0 12
+$define D1 13
+$define D2 14
+$define D3 15
+$define D4 18
+$define D5 19
+$define D6 20
+$define D7 21
+$define D8 22
+$define D9 23
+$define D10 25
+$define D11 27
+$define D12 28
+$define D13 30
+$define D14 42 /* A0 pin */
+$define D15 43 /* A1 pin */
+$define D16 44 /* A2 pin */
+$define D17 2  /* A3 pin */
+$define D18 3  /* A4 pin */
+$define D19 5  /* A5 pin */
+$define NC0 31
+$define NC1 33
+$define NC2 34
+$define NC3 35
+$define NC5 31
+
+/* === Input Pin === */
+pin [D4,D5,D6,D7] = [IM0..3];
+pin [D8,D9,D10,D11] = [OP0..3];
+/* only 3bits */
+pin [D14,D15,D16] = [IN0..2];
+node IN3; IN3 = 'b'0;
+
+/* === Clock Pin === */
+pin D12 = clk;
+/* === Reset Pin === */
+pin D13 = CLR_N;
+/* === Output Pin === */
+pin [D0,D1,D2,D3] = [A0..3];
+/* only 3bits */
+pin [D17,D18,D19] = [OUT0..2];
+node OUT3;
+
+/* === Register Pins(Not Connect) === */
+node AREG0;
+node AREG1;
+node AREG2;
+node AREG3;
+node BREG0;
+node BREG1;
+node BREG2;
+node BREG3;
+node CFLAG;
+
+/* === Asynchronous Clear === */
+CFLAG.ar = !CLR_N;
+A0.ar = !CLR_N;
+A1.ar = !CLR_N;
+A2.ar = !CLR_N;
+A3.ar = !CLR_N;
+AREG0.ar = !CLR_N;
+AREG1.ar = !CLR_N;
+AREG2.ar = !CLR_N;
+AREG3.ar = !CLR_N;
+BREG0.ar = !CLR_N;
+BREG1.ar = !CLR_N;
+BREG2.ar = !CLR_N;
+BREG3.ar = !CLR_N;
+OUT0.ar = !CLR_N;
+OUT1.ar = !CLR_N;
+OUT2.ar = !CLR_N;
+OUT3.ar = !CLR_N;
+
+/* === Clock === */
+CFLAG.ck = clk;
+A0.ck = clk;
+A1.ck = clk;
+A2.ck = clk;
+A3.ck = clk;
+AREG0.ck = clk;
+AREG1.ck = clk;
+AREG2.ck = clk;
+AREG3.ck = clk;
+BREG0.ck = clk;
+BREG1.ck = clk;
+BREG2.ck = clk;
+BREG3.ck = clk;
+OUT0.ck = clk;
+OUT1.ck = clk;
+OUT2.ck = clk;
+OUT3.ck = clk;
+
+/* === Decode Logic === */
+selB=OP1;
+selA=OP0#OP3;
+_LOAD0=OP2#OP3;
+_LOAD1=!OP2#OP3;
+_LOAD2=OP2#!OP3;
+_LOAD3=!OP2#!OP3#(!OP0&CFLAG);
+
+/* === A Register === */
+AREG0.d = s0;
+AREG1.d = s1;
+AREG2.d = s2;
+AREG3.d = s3;
+AREG0.ce = !_LOAD0;
+AREG1.ce = !_LOAD0;
+AREG2.ce = !_LOAD0;
+AREG3.ce = !_LOAD0;
+
+/* === B Register === */
+BREG0.d = s0;
+BREG1.d = s1;
+BREG2.d = s2;
+BREG3.d = s3;
+BREG0.ce = !_LOAD1;
+BREG1.ce = !_LOAD1;
+BREG2.ce = !_LOAD1;
+BREG3.ce = !_LOAD1;
+
+/* === OUT Register === */
+OUT0.d = s0;
+OUT1.d = s1;
+OUT2.d = s2;
+OUT3.d = s3;
+OUT0.ce = !_LOAD2;
+OUT1.ce = !_LOAD2;
+OUT2.ce = !_LOAD2;
+OUT3.ce = !_LOAD2;
+
+/* === PC Logic === */
+A0.d = (s0 & !_LOAD3) # !(A0 # !_LOAD3);
+A1.d = (s1 & !_LOAD3) # ((A1 $ A0) & _LOAD3);
+A2.d = (s2 & !_LOAD3) # ((A2 $ (A1 & A0)) & _LOAD3);
+A3.d = (s3 & !_LOAD3) # ((A3 $ (A2 & A1 & A0)) & _LOAD3);
+
+/* === Multiplexer Logic === */
+y0 = (AREG0 & !selA & !selB) # (BREG0 & selA & !selB) # (IN0 & !selA & selB);
+y1 = (AREG1 & !selA & !selB) # (BREG1 & selA & !selB) # (IN1 & !selA & selB);
+y2 = (AREG2 & !selA & !selB) # (BREG2 & selA & !selB) # (IN2 & !selA & selB);
+y3 = (AREG3 & !selA & !selB) # (BREG3 & selA & !selB) # (IN3 & !selA & selB);
+
+/* === Adder Logic === */
+/* bit0: no carry */
+s0   = y0 $ IM0;                          /* XOR -> sum */
+c0   = y0 & IM0;                          /* AND -> Carry */
+/* bit1 */
+s1   = y1 $ IM1 $ c0;
+c1   = (y1 & IM1) # (y1 & c0) # (IM1 & c0);
+/* bit2 */
+s2   = y2 $ IM2 $ c1;
+c2   = (y2 & IM2) # (y2 & c1) # (IM2 & c1);
+/* bit3 */
+s3   = y3 $ IM3 $ c2;
+Cout = (y3 & IM3) # (y3 & c2) # (IM3 & c2);
+
+/* === D Flip-Flop Logic === */
+CFLAG.d = Cout;

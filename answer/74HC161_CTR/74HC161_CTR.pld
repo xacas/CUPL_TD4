@@ -1,0 +1,58 @@
+Name            74HC161;
+Partno          CPLD;
+Revision        01;
+Date            3/1/26;
+Designer        nichica;
+Company         Yonetsu-Nichica;
+Location        Japan;
+Assembly        None;
+Device          F1504ISPTQFP44;
+
+/* Example showing clock usage */
+$define D0 12
+$define D1 13
+$define D2 14
+$define D3 15
+$define D4 18
+$define D5 19
+$define D6 20
+$define D7 21
+$define D8 22
+$define D9 23
+$define D10 25
+$define D11 27
+$define D12 28
+$define D13 30
+$define D14 42 /* A0 pin */
+$define D15 43 /* A1 pin */
+$define D16 44 /* A2 pin */
+$define D17 2  /* A3 pin */
+$define D18 3  /* A4 pin */
+$define D19 5  /* A5 pin */
+
+/* === Input Pin === */
+pin D10 = clk;
+pin [D4,D5,D6,D7] = [IN0..3];
+pin D8 = CLR_N;
+pin D9 = LOAD_N;
+
+/* === Output Pin === */
+pin [D0,D1,D2,D3] = [Q0..3];
+
+/* === Asynchronous Clear === */
+Q0.ar = !CLR_N;
+Q1.ar = !CLR_N;
+Q2.ar = !CLR_N;
+Q3.ar = !CLR_N;
+
+/* === D Flip-Flop Logic === */
+Q0.d = (IN0 & !LOAD_N) # !(Q0 # !LOAD_N);
+Q1.d = (IN1 & !LOAD_N) # ((Q1 $ Q0) & LOAD_N);
+Q2.d = (IN2 & !LOAD_N) # ((Q2 $ (Q1 & Q0)) & LOAD_N);
+Q3.d = (IN3 & !LOAD_N) # ((Q3 $ (Q2 & Q1 & Q0)) & LOAD_N);
+
+/* === Clock === */
+Q0.ck = clk;
+Q1.ck = clk;
+Q2.ck = clk;
+Q3.ck = clk;
