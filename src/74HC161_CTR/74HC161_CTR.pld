@@ -40,19 +40,8 @@ pin D9 = LOAD_N;
 pin [D0,D1,D2,D3] = [Q0..3];
 
 /* === Asynchronous Clear === */
-Q0.ar = !CLR_N;
-Q1.ar = !CLR_N;
-Q2.ar = !CLR_N;
-Q3.ar = !CLR_N;
+
 
 /* === D Flip-Flop Logic === */
-Q0.d = (IN0 & !LOAD_N) # !(Q0 # !LOAD_N);
-Q1.d = (IN1 & !LOAD_N) # ((Q1 $ Q0) & LOAD_N);
-Q2.d = (IN2 & !LOAD_N) # ((Q2 $ (Q1 & Q0)) & LOAD_N);
-Q3.d = (IN3 & !LOAD_N) # ((Q3 $ (Q2 & Q1 & Q0)) & LOAD_N);
 
 /* === Clock === */
-Q0.ck = clk;
-Q1.ck = clk;
-Q2.ck = clk;
-Q3.ck = clk;

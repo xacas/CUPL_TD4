@@ -36,7 +36,6 @@ pin D1 = B;
 pin [D2, D3, D4, D5] = [C0..3];
 
 /* === Output Pin === */
-pin D6 = y;
+
 
 /* === Multiplexer Logic === */
-y = (C0 & !A & !B) # (C1 & A & !B) # (C2 & !A & B) # (C3 & A & B);

@@ -46,9 +46,3 @@ pin D4 = _load2;
 pin D5 = _load3;
 
 /* === Decode Logic === */
-selectB=OP1;
-selectA=OP0#OP3;
-_load0=OP2#OP3;
-_load1=!OP2#OP3;
-_load2=OP2#!OP3;
-_load3=!OP2#!OP3#(!OP0&CFLAG);
