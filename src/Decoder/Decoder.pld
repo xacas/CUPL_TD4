@@ -8,7 +8,7 @@ Location        Japan;
 Assembly        None;
 Device          F1504ISPTQFP44;
 
-/* Example showing clock usage */
+/* Define Arduino pin assignment */
 $define D0 12
 $define D1 13
 $define D2 14
