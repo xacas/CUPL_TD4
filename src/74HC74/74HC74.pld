@@ -39,10 +39,7 @@ pin D2 = CLR_N;
 pin D0 = Q;
 
 /* === Asynchronous Clear === */
-Q.ar = !CLR_N;
 
 /* === D Flip-Flop Logic === */
-Q.d = D;
 
 /* === Clock === */
-Q.ck = clk;
