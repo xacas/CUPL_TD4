@@ -33,7 +33,6 @@ $define NC0 31
 $define NC1 33
 $define NC2 34
 $define NC3 35
-$define NC5 31
 
 /* === Input Pin === */
 pin [D4,D5,D6,D7] = [IM0..3];
@@ -43,9 +42,11 @@ pin [D14,D15,D16] = [IN0..2];
 node IN3; IN3 = 'b'0;
 
 /* === Clock Pin === */
-pin D12 = clk;
+pin 37 = clk;  /* Please use GCLK1 pin */
+
 /* === Reset Pin === */
-pin D13 = CLR_N;
+pin 39 = CLR_N; /* Please use GCLR pin */
+
 /* === Output Pin === */
 pin [D0,D1,D2,D3] = [A0..3];
 /* only 3bits */
